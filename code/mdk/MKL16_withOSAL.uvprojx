@@ -953,6 +953,11 @@
               <FileType>1</FileType>
               <FilePath>..\fml\system_param.c</FilePath>
             </File>
+            <File>
+              <FileName>version.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\version.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
