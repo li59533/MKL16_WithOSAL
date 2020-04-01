@@ -22,7 +22,7 @@
 #include "bsp_uart.h"
 #include "bsp_systick.h"
 #include "bsp_adc.h"
-#include "app_getdata.h"
+
 /**
  * @addtogroup    bsp_power_Modules 
  * @{  
@@ -93,7 +93,8 @@
  * @brief         
  * @{  
  */
-
+static void (* bsp_beforefunc)(void);
+static void (* bsp_afterfunc)(void);
 /**
  * @}
  */
@@ -144,6 +145,20 @@ void BSP_Power_EnterVLPS_WithCall(void (* beforefunc)(void) , void (* afterfunc)
 	afterfunc();
 }
 
+void BSP_Power_RegisterCall(void (* beforefunc)(void) , void (* afterfunc)(void))
+{
+	bsp_beforefunc = beforefunc;
+	bsp_afterfunc = afterfunc;
+}
+
+void BSP_Power_EnterVLPS_WithCallFunc(void)
+{
+	bsp_beforefunc();
+	BSP_SysTick_DisableIRQ();
+	BOARD_RUNClockToVLPS();
+	BSP_SysTick_Init();
+	bsp_afterfunc();	
+}
 
 
 // -------Test Func--------

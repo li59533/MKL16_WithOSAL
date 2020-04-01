@@ -18,7 +18,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "bsp_led.h"
 /**
  * @addtogroup    user_task_Modules 
  * @{  
@@ -104,6 +104,9 @@ void UserTask_Init(uint8_t taskId)
     g_UserTask_Id = taskId;
 	UserTask_Send_Event(USER_TASK_LOOP_EVENT);
 	UserTask_Send_Event(USER_TASK_LOOP2_EVENT);
+	
+	
+	BSP_LED_Blink(BSP_LED_TEST , 0, 50, 1000);
 }
 
 osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
@@ -111,7 +114,7 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
     if (events & USER_TASK_LOOP_EVENT)
     {
 		DEBUG("USER_TASK_LOOP_EVENT\r\n");
-
+		BSP_LED_Blink(BSP_LED_TEST , 3, 20, 150);
 		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,1000);			
         return events ^ USER_TASK_LOOP_EVENT;
     }
